@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24249229743",
+    "project_id": "pokevet-fdbbf",
+    "storage_bucket": "pokevet-fdbbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24249229743:android:194da7dd620c2590a74f5a",
+        "android_client_info": {
+          "package_name": "gl3.insat.pokevet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24249229743-n8cki5vuo5fqcni38vup1e06toe7oi3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3Dw1_fCDEeF88PLlhhtRjRINLDO9rRGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24249229743-n8cki5vuo5fqcni38vup1e06toe7oi3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
