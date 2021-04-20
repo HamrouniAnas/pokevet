@@ -9,6 +9,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   void initState() {
+    //const primary=const Color.fromRGBO(1, 146, 251, 0.4);
     SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
   }
@@ -16,186 +17,73 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     Color primary = Theme.of(context).primaryColor;
-    TextEditingController _emailController = new TextEditingController();
-    TextEditingController _passwordController = new TextEditingController();
-    TextEditingController _nameController = new TextEditingController();
-    String _email;
-    String _password;
-    String _displayName;
-    bool _obsecure = false;
-    //input widget
-    Widget _input(Icon icon, String hint, TextEditingController controller,
-        bool obsecure) {
-      return Container(
-        padding: EdgeInsets.only(left: 20, right: 20),
-        child: TextField(
-          controller: controller,
-          obscureText: obsecure,
-          style: TextStyle(
-            fontSize: 20,
-          ),
-          decoration: InputDecoration(
-              hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              hintText: hint,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                  width: 2,
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                  width: 3,
-                ),
-              ),
-              prefixIcon: Padding(
-                child: IconTheme(
-                  data: IconThemeData(color: Theme.of(context).primaryColor),
-                  child: icon,
-                ),
-                padding: EdgeInsets.only(left: 30, right: 10),
-              )),
-        ),
-      );
-    }
 
-    //button widget
-    Widget _button(String text, Color splashColor, Color highlightColor,
-        Color fillColor, Color textColor, void function()) {
+    final logo = Hero(
+      tag: 'hero',
+      child: Image.asset('lib/assets/images/logo1.png'),
+    );
+
+    final email = TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      autofocus: false,
+      initialValue: '',
+      decoration: InputDecoration(
+        hintText: 'Email',
+        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
+    );
+
+    final password = TextFormField(
+      autofocus: false,
+      initialValue: '',
+      obscureText: true,
+      decoration: InputDecoration(
+        hintText: 'Password',
+        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
+    );
+
+    final loginButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
       // ignore: deprecated_member_use
-      return RaisedButton(
-        highlightElevation: 0.0,
-        splashColor: splashColor,
-        highlightColor: highlightColor,
-        elevation: 0.0,
-        color: fillColor,
+      child: RaisedButton(
         shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(30.0)),
-        child: Text(
-          text,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
+          borderRadius: BorderRadius.circular(24),
         ),
-        onPressed: () {
-          function();
-        },
-      );
-    }
+        onPressed: () {},
+        padding: EdgeInsets.all(12),
+        color: primary,
+        child: Text('Log In', style: TextStyle(color: Colors.white)),
+      ),
+    );
 
-    void _loginUser() {
-      _email = _emailController.text;
-      _password = _passwordController.text;
-      _emailController.clear();
-      _passwordController.clear();
-    }
+    // ignore: deprecated_member_use
+    final forgotLabel = FlatButton(
+      child: Text(
+        'Forgot password?',
+        style: TextStyle(color: Colors.black54),
+      ),
+      onPressed: () {},
+    );
 
-    return DecoratedBox(
-      decoration: BoxDecoration(color: Theme.of(context).canvasColor),
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
-        child: Container(
-          child: ListView(
-            children: <Widget>[
-              Container(
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      left: 10,
-                      top: 10,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          _emailController.clear();
-                          _passwordController.clear();
-                        },
-                        icon: Icon(
-                          Icons.close,
-                          size: 30.0,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                height: 50,
-                width: 50,
-              ),
-              SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 140,
-                      child: Stack(
-                        children: <Widget>[
-                          Positioned(
-                            child: Align(
-                              child: Container(
-                                width: 130,
-                                height: 130,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                          Positioned(
-                            child: Container(
-                              child: Text(
-                                "LOGIN",
-                                style: TextStyle(
-                                  fontSize: 48,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 20, top: 60),
-                      child: _input(
-                          Icon(Icons.email), "EMAIL", _emailController, false),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: _input(Icon(Icons.lock), "PASSWORD",
-                          _passwordController, true),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Container(
-                        child: _button("LOGIN", Colors.white, primary, primary,
-                            Colors.white, _loginUser),
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          height: MediaQuery.of(context).size.height / 1.1,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.white,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.only(left: 24.0, right: 24.0),
+          children: <Widget>[
+            logo,
+            SizedBox(height: 48.0),
+            email,
+            SizedBox(height: 8.0),
+            password,
+            SizedBox(height: 24.0),
+            loginButton,
+            forgotLabel
+          ],
         ),
       ),
     );

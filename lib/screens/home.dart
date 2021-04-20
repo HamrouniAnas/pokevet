@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokevet_flutter/screens/login.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -23,8 +24,8 @@ class _HomeState extends State<Home> {
                 child: SizedBox(
                   height: 50,
                   width: 300,
-                  child: _button("SIGN IN", Colors.white, primary, primary,
-                      Colors.white, () {}),
+                  child: _button(
+                      "SIGN IN", Colors.white, primary, primary, Colors.white),
                 ),
               ),
               Stack(children: <Widget>[
@@ -69,7 +70,7 @@ class _HomeState extends State<Home> {
   }
 
   Widget _button(String text, Color splashColor, Color highlightColor,
-      Color fillColor, Color textColor, void function()) {
+      Color fillColor, Color textColor) {
     // ignore: deprecated_member_use
     return RaisedButton(
       highlightElevation: 0.0,
@@ -85,7 +86,8 @@ class _HomeState extends State<Home> {
             fontWeight: FontWeight.bold, color: textColor, fontSize: 20),
       ),
       onPressed: () {
-        function();
+        Navigator.push(
+            context, new MaterialPageRoute(builder: (context) => Login()));
       },
     );
   }
