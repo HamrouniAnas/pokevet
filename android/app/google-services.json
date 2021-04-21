@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "24249229743",
-    "project_id": "pokevet-fdbbf",
-    "storage_bucket": "pokevet-fdbbf.appspot.com"
+    "project_number": "905016816086",
+    "project_id": "pokevet-c8b3a",
+    "storage_bucket": "pokevet-c8b3a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:24249229743:android:194da7dd620c2590a74f5a",
+        "mobilesdk_app_id": "1:905016816086:android:f643547f7509f5731cb477",
         "android_client_info": {
-          "package_name": "gl3.insat.pokevet"
+          "package_name": "gl3.insat.pokevet_flutter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "24249229743-n8cki5vuo5fqcni38vup1e06toe7oi3d.apps.googleusercontent.com",
+          "client_id": "905016816086-ugmiqrvg0rk0clfl9leq5lqq31gmk65l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC3Dw1_fCDEeF88PLlhhtRjRINLDO9rRGY"
+          "current_key": "AIzaSyBX4UF4MiKgShUZ6X3ZUt4yUa8A22XCMgQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "24249229743-n8cki5vuo5fqcni38vup1e06toe7oi3d.apps.googleusercontent.com",
+              "client_id": "905016816086-ugmiqrvg0rk0clfl9leq5lqq31gmk65l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

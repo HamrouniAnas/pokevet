@@ -7,6 +7,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   void initState() {
     //const primary=const Color.fromRGBO(1, 146, 251, 0.4);
@@ -24,9 +27,9 @@ class _LoginState extends State<Login> {
     );
 
     final email = TextFormField(
+      controller: emailController,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      initialValue: '',
       decoration: InputDecoration(
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -35,8 +38,8 @@ class _LoginState extends State<Login> {
     );
 
     final password = TextFormField(
+      controller: passwordController,
       autofocus: false,
-      initialValue: '',
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
@@ -52,7 +55,14 @@ class _LoginState extends State<Login> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
-        onPressed: () {},
+        // todo: login function
+        onPressed: () {
+          //login simulation
+          if (emailController.text == "anas" &&
+              passwordController.text == "anas") {
+            Navigator.pushNamed(context, '/home');
+          }
+        },
         padding: EdgeInsets.all(12),
         color: primary,
         child: Text('Log In', style: TextStyle(color: Colors.white)),
