@@ -38,7 +38,6 @@ class _ResetState extends State<Reset> {
       ),
     );
 
-
     final resetButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       // ignore: deprecated_member_use
@@ -46,17 +45,32 @@ class _ResetState extends State<Reset> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
-        // todo: reset function
-        onPressed: (){
+        onPressed: () async {
+          try {
+            await FirebaseAuth.instance
+                .sendPasswordResetEmail(email: emailController.text);
 
+            Navigator.pop(context,'Reset mail sent');
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'user-not-found') {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  content: Text('There is no user with this mail address'),
+                ),
+                barrierDismissible: true,
+              );
+              print('user not found');
+            }
+          } catch (e) {
+            print(e);
+          }
         },
         padding: EdgeInsets.all(12),
         color: primary,
         child: Text('Reset Password', style: TextStyle(color: Colors.white)),
       ),
     );
-
-
 
     return Scaffold(
       backgroundColor: Colors.white,

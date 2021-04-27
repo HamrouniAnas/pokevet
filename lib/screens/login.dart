@@ -14,7 +14,6 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    //const primary=const Color.fromRGBO(1, 146, 251, 0.4);
     SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
   }
@@ -57,7 +56,6 @@ class _LoginState extends State<Login> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
-        // todo: login function
         onPressed: () async {
           try {
             UserCredential userCredential = await FirebaseAuth.instance
@@ -98,9 +96,15 @@ class _LoginState extends State<Login> {
         'Forgot password?',
         style: TextStyle(color: Colors.black54),
       ),
-      onPressed: () {
-        Navigator.push(
-            context, new MaterialPageRoute(builder: (context) => Reset()));
+      onPressed: () async {
+        var navRes = await Navigator.pushNamed(context, '/reset');
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            content: Text(navRes),
+          ),
+          barrierDismissible: true,
+        );
       },
     );
 
