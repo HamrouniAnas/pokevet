@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import 'home.dart';
 import 'login.dart';
 
 class Signup extends StatefulWidget {
@@ -10,6 +12,11 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
@@ -28,7 +35,7 @@ class _SignupState extends State<Signup> {
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      initialValue: '',
+      controller: emailController,
       decoration: InputDecoration(
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -38,7 +45,7 @@ class _SignupState extends State<Signup> {
     final username = TextFormField(
       keyboardType: TextInputType.text,
       autofocus: false,
-      initialValue: '',
+      controller: usernameController,
       decoration: InputDecoration(
         hintText: 'Username',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -48,7 +55,7 @@ class _SignupState extends State<Signup> {
 
     final password = TextFormField(
       autofocus: false,
-      initialValue: '',
+      controller: passwordController,
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
@@ -57,14 +64,53 @@ class _SignupState extends State<Signup> {
       ),
     );
 
-    final loginButton = Padding(
+    final signupButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       // ignore: deprecated_member_use
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
-        onPressed: () {},
+        onPressed: () async {
+          try {
+            UserCredential userCredential =
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              email: emailController.text,
+              password: passwordController.text,
+            );
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'weak-password') {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  content: Text('The password provided is too weak.'),
+                ),
+                barrierDismissible: true,
+              );
+              print('The password provided is too weak.');
+            } else if (e.code == 'email-already-in-use') {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  content: Text('The account already exists for that email.'),
+                ),
+                barrierDismissible: true,
+              );
+              print('The account already exists for that email.');
+            }
+          } catch (e) {
+            print(e);
+          }
+          FirebaseAuth.instance.authStateChanges().listen((User user) {
+            if (user == null) {
+              print('User is currently signed out!');
+            } else {
+              print('User is signed in!');
+              Navigator.push(
+                  context, new MaterialPageRoute(builder: (context) => Home()));
+            }
+          });
+        },
         padding: EdgeInsets.all(12),
         color: primary,
         child: Text('Sign-up', style: TextStyle(color: Colors.white)),
@@ -98,7 +144,7 @@ class _SignupState extends State<Signup> {
             SizedBox(height: 8.0),
             password,
             SizedBox(height: 24.0),
-            loginButton,
+            signupButton,
             forgotLabel
           ],
         ),

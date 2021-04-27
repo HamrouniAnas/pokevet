@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pokevet_flutter/screens/reset.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -56,11 +58,32 @@ class _LoginState extends State<Login> {
           borderRadius: BorderRadius.circular(24),
         ),
         // todo: login function
-        onPressed: () {
-          //login simulation
-          if (emailController.text == "anas" &&
-              passwordController.text == "anas") {
-            Navigator.pushNamed(context, '/home');
+        onPressed: () async {
+          try {
+            UserCredential userCredential = await FirebaseAuth.instance
+                .signInWithEmailAndPassword(
+                    email: emailController.text,
+                    password: passwordController.text);
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'user-not-found') {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  content: Text("No user found for that email."),
+                ),
+                barrierDismissible: true,
+              );
+              print('No user found for that email.');
+            } else if (e.code == 'wrong-password') {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  content: Text("Wrong password provided for that user."),
+                ),
+                barrierDismissible: true,
+              );
+              print('Wrong password provided for that user.');
+            }
           }
         },
         padding: EdgeInsets.all(12),
@@ -75,7 +98,10 @@ class _LoginState extends State<Login> {
         'Forgot password?',
         style: TextStyle(color: Colors.black54),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+            context, new MaterialPageRoute(builder: (context) => Reset()));
+      },
     );
 
     return Scaffold(
