@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pokevet_flutter/screens/home.dart';
 import 'package:pokevet_flutter/screens/welcome.dart';
 
 
@@ -51,6 +53,13 @@ class _LoadingState extends State<Loading> {
       );
     }
     print('loading');
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    if (auth.currentUser != null) {
+      print('user signed in');
+      return Home();
+    }
+    print('user not signed in');
     return Welcome();
   }
 }
