@@ -2,5 +2,5 @@ package gl3.insat.pokevet_flutter
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity() {
+class MainActivity : FlutterActivity() {
 }

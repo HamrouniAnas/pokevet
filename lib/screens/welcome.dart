@@ -14,7 +14,7 @@ class _WelcomeState extends State<Welcome> {
     }
 
     return WillPopScope(
-      onWillPop: ()=>Future.value(true),
+      onWillPop: () => Future.value(false),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Center(
@@ -25,8 +25,8 @@ class _WelcomeState extends State<Welcome> {
                   child: SizedBox(
                     height: 50,
                     width: 300,
-                    child: _button(
-                        "SIGN IN", Colors.white, primary, primary, Colors.white),
+                    child: _button("SIGN IN", Colors.white, primary, primary,
+                        Colors.white),
                   ),
                 ),
                 Stack(children: <Widget>[
@@ -41,8 +41,8 @@ class _WelcomeState extends State<Welcome> {
                     padding: const EdgeInsets.fromLTRB(118, 310, 30, 20),
                     child: Text(
                       'we gotta shelter them all!',
-                      style:
-                          TextStyle(color: primary, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: primary, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
@@ -55,7 +55,7 @@ class _WelcomeState extends State<Welcome> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(144, 405, 30, 20),
                     child: TextButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, '/signup');
                       },
                       child: Text(

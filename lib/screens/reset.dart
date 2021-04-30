@@ -50,7 +50,7 @@ class _ResetState extends State<Reset> {
             await FirebaseAuth.instance
                 .sendPasswordResetEmail(email: emailController.text);
 
-            Navigator.pop(context,'Reset mail sent');
+            Navigator.pop(context, 'Reset mail sent');
           } on FirebaseAuthException catch (e) {
             if (e.code == 'user-not-found') {
               showDialog(

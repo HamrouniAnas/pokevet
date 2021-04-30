@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pokevet_flutter/screens/welcome.dart';
+import 'package:pokevet_flutter/services/custom_icons_icons.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,22 +9,27 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: FloatingActionButton(
-          backgroundColor: Colors.red,
-          onPressed: () async {
-            await FirebaseAuth.instance.signOut();
-            FirebaseAuth.instance.authStateChanges().listen((User user) {
-              if (user == null) {
-                print('User is currently signed out!');
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => Welcome()));
-              } else {
-                print('User is signed in!');
-              }
-            });
-          },
+    return WillPopScope(
+      onWillPop: () => Future.value(true),
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 65,
+          automaticallyImplyLeading: false,
+          title: SizedBox(
+            child: Image.asset('lib/assets/images/logo.png'),
+            width: 120,
+          ),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(CustomIcons.profile, size: 60),
+                color: Colors.blueAccent,
+                iconSize: 60,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/profile');
+                })
+          ],
+          backgroundColor: Color.fromRGBO(55, 63, 81, 0.2),
+          elevation: 0,
         ),
       ),
     );

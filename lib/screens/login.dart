@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pokevet_flutter/screens/reset.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 import 'home.dart';
 
@@ -22,9 +23,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    Color primary = Theme
-        .of(context)
-        .primaryColor;
+    Color primary = Theme.of(context).primaryColor;
 
     final logo = Hero(
       tag: 'hero',
@@ -64,36 +63,32 @@ class _LoginState extends State<Login> {
           try {
             UserCredential userCredential = await FirebaseAuth.instance
                 .signInWithEmailAndPassword(
-                email: emailController.text,
-                password: passwordController.text);
+                    email: emailController.text,
+                    password: passwordController.text);
           } on FirebaseAuthException catch (e) {
             if (e.code == 'user-not-found') {
               showDialog(
                 context: context,
-                builder: (_) =>
-                    AlertDialog(
-                      content: Text("No user found for that email."),
-                    ),
+                builder: (_) => AlertDialog(
+                  content: Text("No user found for that email."),
+                ),
                 barrierDismissible: true,
               );
               print('No user found for that email.');
             } else if (e.code == 'wrong-password') {
               showDialog(
                 context: context,
-                builder: (_) =>
-                    AlertDialog(
-                      content: Text("Wrong password provided for that user."),
-                    ),
+                builder: (_) => AlertDialog(
+                  content: Text("Wrong password provided for that user."),
+                ),
                 barrierDismissible: true,
               );
               print('Wrong password provided for that user.');
             }
           } catch (e) {
-            print (e);
+            print(e);
           }
-          FirebaseAuth.instance
-              .authStateChanges()
-              .listen((User user) {
+          FirebaseAuth.instance.authStateChanges().listen((User user) {
             if (user == null) {
               print('User is currently signed out!');
             } else {
@@ -102,10 +97,39 @@ class _LoginState extends State<Login> {
                   context, new MaterialPageRoute(builder: (context) => Home()));
             }
           });
-              },
+        },
         padding: EdgeInsets.all(12),
         color: primary,
         child: Text('Log In', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
+    final fbLoginButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 0.0),
+      // ignore: deprecated_member_use
+      child: SignInButton(
+        Buttons.Facebook,
+        text: "Log In with Facebook",
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        //todo : fb login function
+        onPressed: () {
+          Future<UserCredential> signInWithFacebook() async {
+            // Trigger the sign-in flow
+            final AccessToken result =
+                (await FacebookAuth.instance.login()) as AccessToken;
+
+            // Create a credential from the access token
+            final facebookAuthCredential =
+                FacebookAuthProvider.credential(result.token);
+
+            // Once signed in, return the UserCredential
+            return await FirebaseAuth.instance
+                .signInWithCredential(facebookAuthCredential);
+          }
+        },
+        padding: EdgeInsets.all(12),
       ),
     );
 
@@ -119,10 +143,9 @@ class _LoginState extends State<Login> {
         var navRes = await Navigator.pushNamed(context, '/reset');
         showDialog(
           context: context,
-          builder: (_) =>
-              AlertDialog(
-                content: Text(navRes),
-              ),
+          builder: (_) => AlertDialog(
+            content: Text(navRes),
+          ),
           barrierDismissible: true,
         );
       },
@@ -142,6 +165,7 @@ class _LoginState extends State<Login> {
             password,
             SizedBox(height: 24.0),
             loginButton,
+            fbLoginButton,
             forgotLabel
           ],
         ),

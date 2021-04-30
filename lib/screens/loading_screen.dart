@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:pokevet_flutter/screens/home.dart';
 import 'package:pokevet_flutter/screens/welcome.dart';
-
 
 class Loading extends StatefulWidget {
   @override
@@ -12,17 +11,16 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
   bool _initialized = false;
   bool _error = false;
 
   void initializeFlutterFire() async {
-    try{
+    try {
       await Firebase.initializeApp();
       setState(() {
         _initialized = true;
       });
-    } catch(e){
+    } catch (e) {
       setState(() {
         _error = true;
       });
@@ -42,10 +40,10 @@ class _LoadingState extends State<Loading> {
         child: Lottie.asset('lib/assets/lottie/LoadingScreen.json'),
       ),
     );*/
-    if(_error){
+    if (_error) {
       print('Error');
     }
-    if(!_initialized) {
+    if (!_initialized) {
       return Scaffold(
         body: Center(
           child: Lottie.asset('lib/assets/lottie/LoadingScreen.json'),
