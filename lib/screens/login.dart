@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'home.dart';
 
@@ -104,7 +105,7 @@ class _LoginState extends State<Login> {
       ),
     );
 
-    final fbLoginButton = Padding(
+   /* final fbLoginButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 0.0),
       // ignore: deprecated_member_use
       child: SignInButton(
@@ -116,13 +117,17 @@ class _LoginState extends State<Login> {
         //todo : fb login function
         onPressed: () {
           Future<UserCredential> signInWithFacebook() async {
+            print("12");
             // Trigger the sign-in flow
             final AccessToken result =
                 (await FacebookAuth.instance.login()) as AccessToken;
+            print("13");
 
             // Create a credential from the access token
             final facebookAuthCredential =
                 FacebookAuthProvider.credential(result.token);
+
+            print("14");
 
             // Once signed in, return the UserCredential
             return await FirebaseAuth.instance
@@ -132,6 +137,39 @@ class _LoginState extends State<Login> {
         padding: EdgeInsets.all(12),
       ),
     );
+    final googleLoginButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 0.0),
+      // ignore: deprecated_member_use
+      child: SignInButton(
+        Buttons.GoogleDark,
+        text: "Log In with Google",
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        //todo : google login function
+        onPressed: () {
+          Future<UserCredential> signInWithGoogle() async {
+            // Trigger the authentication flow
+            final GoogleSignInAccount googleUser =
+                await GoogleSignIn().signIn();
+
+            // Obtain the auth details from the request
+            final GoogleSignInAuthentication googleAuth =
+                await googleUser.authentication;
+
+            // Create a new credential
+            final credential = GoogleAuthProvider.credential(
+              accessToken: googleAuth.accessToken,
+              idToken: googleAuth.idToken,
+            );
+
+            // Once signed in, return the UserCredential
+            return await FirebaseAuth.instance.signInWithCredential(credential);
+          }
+        },
+        padding: EdgeInsets.all(12),
+      ),
+    );*/
 
     // ignore: deprecated_member_use
     final forgotLabel = FlatButton(
@@ -165,7 +203,7 @@ class _LoginState extends State<Login> {
             password,
             SizedBox(height: 24.0),
             loginButton,
-            fbLoginButton,
+            //googleLoginButton,
             forgotLabel
           ],
         ),

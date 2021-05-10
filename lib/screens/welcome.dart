@@ -14,59 +14,52 @@ class _WelcomeState extends State<Welcome> {
     }
 
     return WillPopScope(
-      onWillPop: () => Future.value(false),
+      onWillPop: () => Future.value(true),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Center(
-          child: Container(
-            child: Stack(
-              children: <Widget>[
-                Center(
-                  child: SizedBox(
-                    height: 50,
-                    width: 300,
-                    child: _button("SIGN IN", Colors.white, primary, primary,
-                        Colors.white),
-                  ),
+          child: ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(left: 24.0, right: 24.0),
+            children: <Widget>[
+              SizedBox(height: 48.0),
+              Image.asset(
+                'lib/assets/images/logo3.png',
+                width: 55,
+                height: 55,
+              ),
+              SizedBox(height: 8.0),
+              Center(
+                child: Text(
+                  'we gotta shelter them all!',
+                  style: TextStyle(color: primary, fontWeight: FontWeight.bold),
                 ),
-                Stack(children: <Widget>[
-                  SizedBox(
-                    width: 400,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(100, 250, 80, 20),
-                      child: Image.asset('lib/assets/images/logo.png'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(118, 310, 30, 20),
-                    child: Text(
-                      'we gotta shelter them all!',
-                      style: TextStyle(
-                          color: primary, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(137, 421, 30, 20),
-                    child: Text(
-                      'or',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(144, 405, 30, 20),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/signup');
-                      },
-                      child: Text(
-                        'create an account',
-                        style: TextStyle(color: primary),
-                      ),
-                    ),
-                  )
-                ])
-              ],
-            ),
+              ),
+              SizedBox(height: 24.0),
+              SizedBox(
+                  height: 50,
+                  width: 300,
+                  child: _button(
+                      "SIGN IN", Colors.white, primary, primary, Colors.white)),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/signup');
+                },
+                child: RichText(
+                  text: TextSpan(children: <TextSpan>[
+                    TextSpan(
+                        text: "or ", style: TextStyle(color: Colors.black)),
+                    TextSpan(
+                      text: "create an account",
+                      style: TextStyle(color: primary),
+                    )
+                  ]),
+                ),
+              ),
+              // loginButton,
+              //fbLoginButton,
+              // forgotLabel
+            ],
           ),
         ),
       ),

@@ -63,4 +63,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.facebook.android:facebook-core:9.1.0'
+    implementation 'com.facebook.android:facebook-login:9.1.0'
+    implementation 'com.facebook.android:facebook-share:8.2.0'
+    implementation 'com.facebook.android:facebook-messenger:8.2.0'
+    implementation 'com.facebook.android:facebook-applinks:8.2.0'
 }

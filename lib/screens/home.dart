@@ -7,10 +7,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+    ),
+    Text(
+      'Index 1: Business',
+    ),
+    Text(
+      'Index 2: School',
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Color primary = Theme.of(context).primaryColor;
     return WillPopScope(
-      onWillPop: () => Future.value(true),
+      onWillPop: () => Future.value(false),
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 65,
@@ -30,6 +50,28 @@ class _HomeState extends State<Home> {
           ],
           backgroundColor: Color.fromRGBO(55, 63, 81, 0.2),
           elevation: 0,
+        ),
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(CustomIcons.refuge),
+              label: 'Refuge',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CustomIcons.shop),
+              label: 'Boutique',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CustomIcons.geolocalisation),
+              label: 'Géolocalisation',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: primary,
+          onTap: _onItemTapped,
         ),
       ),
     );
