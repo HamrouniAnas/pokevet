@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokevet_flutter/screens/boutique.dart';
+import 'package:pokevet_flutter/screens/g%C3%A9olocalisation.dart';
+import 'package:pokevet_flutter/screens/refuge.dart';
 import 'package:pokevet_flutter/services/custom_icons_icons.dart';
 
 class Home extends StatefulWidget {
@@ -9,15 +12,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-    ),
-    Text(
-      'Index 1: Business',
-    ),
-    Text(
-      'Index 2: School',
-    ),
+    Refuge(),
+    Boutique(),
+    Geolocalisation(),
   ];
 
   void _onItemTapped(int index) {
@@ -51,8 +48,9 @@ class _HomeState extends State<Home> {
           backgroundColor: Color.fromRGBO(55, 63, 81, 0.2),
           elevation: 0,
         ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _widgetOptions,
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

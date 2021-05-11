@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,15 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     Color primary = Theme.of(context).primaryColor;
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    Future<void> addUser(String username, String mail, String uid) {
+      return users
+          .add({'username': username, 'mail': mail,'uid':uid})
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user : $error"));
+    }
 
     final logo = Hero(
       tag: 'hero',
@@ -78,6 +88,7 @@ class _SignupState extends State<Signup> {
               email: emailController.text,
               password: passwordController.text,
             );
+            await addUser(usernameController.text, emailController.text, FirebaseAuth.instance.currentUser.uid);
           } on FirebaseAuthException catch (e) {
             if (e.code == 'weak-password') {
               showDialog(
@@ -101,6 +112,7 @@ class _SignupState extends State<Signup> {
           } catch (e) {
             print(e);
           }
+
           FirebaseAuth.instance.authStateChanges().listen((User user) {
             if (user == null) {
               print('User is currently signed out!');
